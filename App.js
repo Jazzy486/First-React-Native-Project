@@ -1,73 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, Alert} from 'react-native';
+import React, { useState } from 'react';
+import LoginScreen from './components/LoginScreen';
+import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 
 
-const handlePress = () => {
-  Alert.alert('Well Done!', 'You have successfully logged in!');
-};
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+
+
 
 
 export default function App() {
-  
+
+  const Stack = createNativeStackNavigator();
 
   return (
-    
-    <View style={{flex: 1}}>
-      <View style={{flex: 0.30, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
-      <Image
-        style={{width: 100, height: 100}}
-        source={require('./assets/favicon.png')}
-      />
-      </View>
+    <NavigationContainer>
+    <Stack.Navigator>
+        <Stack.Screen 
+        name="Welcome" 
+        component={LoginScreen} 
+        options={{ headerShown: false }}  
+        />
 
-      <View style={{flex:0.40, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
-      <TextInput
-        numberOfLines={4}
-        maxLength={40}
-        onChangeText={text => onChangeText(text)}
-        style={{padding: 10, width: 280, height: 60, borderColor: 'gray', borderWidth: 1, backgroundColor: 'white', marginTop: 20, borderRadius: 50,color: 'black'}}
-        placeholder="Email"
+        <Stack.Screen 
+        name="Home" 
+        component={Home} 
+        options={{ headerShown: true }}  
+        />
+
+        <Stack.Screen 
+        name="Dashboard" 
+        component={Dashboard} 
+        options={{ headerShown: true }}  
+        />
+
         
-      />
-
-      <TextInput
-        numberOfLines={4}
-        maxLength={40}
-        onChangeText={text => onChangeText(text)}
-        style={{padding: 10, width: 280, height: 60, borderColor: 'gray', borderWidth: 1, borderRadius: 50, backgroundColor: 'white', marginTop: 20}}
-        placeholder="Password"
-
-
-      />
-
-
-
-      </View>
-
-      <View style={{flex:0.30, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
-      <Pressable style={styles.button} onPress={handlePress}>
-      <Text style={styles.text}>Login</Text>
-      </Pressable>
-      </View>
-    </View>
+      </Stack.Navigator>
+      <StatusBar style="auto" />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 52,
-    borderRadius: 50,
-    elevation: 3,
-    backgroundColor: 'black',
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
-});
+
