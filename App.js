@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import LoginScreen from './components/LoginScreen';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
+import ChatScreen from './components/ChatScreen';
 
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 
 
@@ -36,6 +38,12 @@ export default function App() {
         <Stack.Screen 
         name="Dashboard" 
         component={Dashboard} 
+        options={{ headerShown: true }}  
+        />
+
+       <Stack.Screen 
+        name="ChatScreen" 
+        component={ChatScreen} 
         options={{ headerShown: true }}  
         />
 
