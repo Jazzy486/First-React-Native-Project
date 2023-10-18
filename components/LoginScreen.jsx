@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, Alert} from 'react-native';
 import React, { useState } from 'react';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -29,14 +29,14 @@ export default function LoginScreen() {
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 0.30, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
+      <View style={{flex: 0.30, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center'}}>
       <Image
-        style={{width: 100, height: 100}}
-        source={require('../assets/favicon.png')}
+        style={{width: 100, height: 100,}}
+        source={require('../assets/Play_Fusion_Logo-removebg.png')}
       />
       </View>
 
-      <View style={{flex:0.40, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
+      <View style={{flex:0.40, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center'}}>
       <TextInput
         numberOfLines={4}
         maxLength={40}
@@ -48,6 +48,7 @@ export default function LoginScreen() {
 
       <TextInput
         numberOfLines={4}
+        secureTextEntry={true}
         maxLength={40}
         onChangeText={password => onChangePassword(password)}
         style={{padding: 10, width: 280, height: 60, borderColor: 'gray', borderWidth: 1, borderRadius: 50, backgroundColor: 'white', marginTop: 20}}
@@ -60,7 +61,7 @@ export default function LoginScreen() {
 
       </View>
 
-      <View style={{flex:0.30, backgroundColor:'#fffaf0', alignItems:'center', justifyContent:'center'}}>
+      <View style={{flex:0.30, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center'}}>
       <Pressable style={styles.button} onPress={handlePress}>
       <Text style={styles.text}>Login</Text>
       </Pressable>
