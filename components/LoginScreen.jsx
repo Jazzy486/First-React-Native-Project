@@ -1,30 +1,66 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, Alert} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 
 
-
 export default function LoginScreen() {
+
+  const [text, onChangeText] = useState('');
+  const [password, onChangePassword] = useState('');
 
   const navigation = useNavigation();
   const handlePress = () => {
-    if(!text.length){
+    if (!text.length) {
       Alert.alert('Error', 'Please enter your email');
       return;
     }
-    if(!password.length){
+    if (!password.length) {
       Alert.alert('Error', 'Please enter your password');
       return;
     }
-    navigation.push('Home');
-    // Alert.alert('Well Done!', 'You have successfully logged in!');
+
+    const user = { email: text, password: password };
+
+    // Load the existing users from AsyncStorage
+    AsyncStorage.getItem('users')
+      .then((data) => {
+        const existingUsers = data ? JSON.parse(data) : [];
+        
+        // Check if the user already exists
+        const userExists = existingUsers.some((existingUser) => existingUser.email === user.email);
+        if (userExists) {
+          Alert.alert('Error', 'User with this email already exists');
+          return;
+        }
+
+        // Add the new user
+        existingUsers.push(user);
+
+        // Store the updated users in AsyncStorage
+        AsyncStorage.setItem('users', JSON.stringify(existingUsers))
+          .then(() => {
+            console.log('User added and saved in AsyncStorage:', user);
+            navigation.push('Home');
+          })
+          .catch((error) => {
+            console.error('Error saving user in AsyncStorage:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error reading users from AsyncStorage:', error);
+      });
   };
+
+  // useEffect(() => {
+    
+  //   AsyncStorage.setItem('users', JSON.stringify(myUsers));  
+  // }, [myUsers]);
   
-  const [text, onChangeText] = useState('');
-  const [password, onChangePassword] = useState('');
+  
+  
 
 
   return (
@@ -61,7 +97,10 @@ export default function LoginScreen() {
 
       </View>
 
-      <View style={{flex:0.30, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center'}}>
+      <View style={{flex:0.30, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center',display:'flex', gap:10 ,flexDirection:"row"}}>
+      <Pressable style={styles.button} onPress={handlePress}>
+      <Text style={styles.text}>Signup</Text>
+      </Pressable>
       <Pressable style={styles.button} onPress={handlePress}>
       <Text style={styles.text}>Login</Text>
       </Pressable>
