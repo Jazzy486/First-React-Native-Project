@@ -13,15 +13,24 @@ export default function Home() {
   const handlePress = () => {
     navigation.navigate('Dashboard');
   };
+
+  const handleDarkModeToggle = () => {
+    Alert.alert('Well Done!', 'You have successfully toggled dark mode!');
+  }
+
   
   
 
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Welcome to Home Screen</Text>
+      <Text style={{marginBottom:20}}>Welcome to Home Screen</Text>
       <Pressable style={styles.button} onPress={handlePress}>
       <Text style={styles.text}>Go to Dashboard</Text>
+      </Pressable>
+
+      <Pressable style={{...styles.button, marginTop:20}}>
+      <Text style={styles.text} onPress={handleDarkModeToggle}>Toggle Dark Mode</Text>
       </Pressable>
     </View>
   );

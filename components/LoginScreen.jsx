@@ -12,7 +12,8 @@ export default function LoginScreen() {
   const [password, onChangePassword] = useState('');
 
   const navigation = useNavigation();
-  const handlePress = () => {
+  
+  const handleSignupPress = () => {
     if (!text.length) {
       Alert.alert('Error', 'Please enter your email');
       return;
@@ -24,7 +25,6 @@ export default function LoginScreen() {
 
     const user = { email: text, password: password };
 
-    // Load the existing users from AsyncStorage
     AsyncStorage.getItem('users')
       .then((data) => {
         const existingUsers = data ? JSON.parse(data) : [];
@@ -42,8 +42,9 @@ export default function LoginScreen() {
         // Store the updated users in AsyncStorage
         AsyncStorage.setItem('users', JSON.stringify(existingUsers))
           .then(() => {
-            console.log('User added and saved in AsyncStorage:', user);
+            console.log('User added and saved in AsyncStorage:', existingUsers);
             navigation.push('Home');
+            
           })
           .catch((error) => {
             console.error('Error saving user in AsyncStorage:', error);
@@ -52,16 +53,34 @@ export default function LoginScreen() {
       .catch((error) => {
         console.error('Error reading users from AsyncStorage:', error);
       });
+  
   };
 
-  // useEffect(() => {
-    
-  //   AsyncStorage.setItem('users', JSON.stringify(myUsers));  
-  // }, [myUsers]);
-  
-  
-  
+  const handleLoginPress = () => {
+    if (!text.length) {
+      Alert.alert('Error', 'Please enter your email');
+      return;
+    }
+    if (!password.length) {
+      Alert.alert('Error', 'Please enter your password');
+      return;
+    }
 
+    AsyncStorage.getItem('users').then((data) => {
+      const existingUsers = data ? JSON.parse(data) : [];
+      const user = existingUsers.find((existingUser) => existingUser.email === text);
+      if (!user) {
+        Alert.alert('Error', 'User not found');
+        return;
+      }
+      if (user.password !== password) {
+        Alert.alert('Error', 'Password is incorrect');
+        return;
+      }
+      navigation.push('Home');
+    });
+
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -98,13 +117,17 @@ export default function LoginScreen() {
       </View>
 
       <View style={{flex:0.30, backgroundColor:'#3CF072', alignItems:'center', justifyContent:'center',display:'flex', gap:10 ,flexDirection:"row"}}>
-      <Pressable style={styles.button} onPress={handlePress}>
+      
+      <Pressable style={styles.button} onPress={handleSignupPress}>
       <Text style={styles.text}>Signup</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={handlePress}>
+      
+      <Pressable style={styles.button} onPress={handleLoginPress}>
       <Text style={styles.text}>Login</Text>
       </Pressable>
+      
       </View>
+    
     </View>
   );
 }
