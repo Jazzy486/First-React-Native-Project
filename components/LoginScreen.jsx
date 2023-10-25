@@ -23,7 +23,7 @@ export default function LoginScreen() {
       return;
     }
 
-    const user = { email: text, password: password };
+    const user = { email: text, password: password, isLoggedIn: false };
 
     AsyncStorage.getItem('users')
       .then((data) => {
@@ -65,7 +65,7 @@ export default function LoginScreen() {
       Alert.alert('Error', 'Please enter your password');
       return;
     }
-
+  
     AsyncStorage.getItem('users').then((data) => {
       const existingUsers = data ? JSON.parse(data) : [];
       const user = existingUsers.find((existingUser) => existingUser.email === text);
@@ -77,10 +77,22 @@ export default function LoginScreen() {
         Alert.alert('Error', 'Password is incorrect');
         return;
       }
-      navigation.push('Home');
+      
+      // Set isLoggedIn to true for the logged-in user
+      user.isLoggedIn = true;
+  
+      // Save the updated user data back to AsyncStorage
+      AsyncStorage.setItem('users', JSON.stringify(existingUsers))
+        .then(() => {
+          console.log('User logged in and saved in AsyncStorage:', existingUsers);
+          navigation.push('Home');
+        })
+        .catch((error) => {
+          console.error('Error saving user in AsyncStorage:', error);
+        });
     });
-
   };
+  
 
   return (
     <View style={{flex: 1}}>
