@@ -6,16 +6,16 @@ import faviconImage from '../assets/favicon.png';
 import { useNavigation } from '@react-navigation/native';
 
 var myArrayForFlatList = [
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '0' },
-  { img: faviconImage, name: 'Ali', msg: 'New York City', time: '10:00 AM', key: '1' },
-  { img: faviconImage, name: 'Asad', msg: 'New York City', time: '10:00 AM', key: '2' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '3' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '4' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '5' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '6' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '7' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '8' },
-  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', key: '9' }
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '0' },
+  { img: faviconImage, name: 'Ali', msg: 'New York City', time: '10:00 AM', id: '1' },
+  { img: faviconImage, name: 'Asad', msg: 'New York City', time: '10:00 AM', id: '2' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '3' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '4' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '5' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '6' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '7' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '8' },
+  { img: faviconImage, name: 'Khalid', msg: 'New York City', time: '10:00 AM', id: '9' }
 ]
 
 

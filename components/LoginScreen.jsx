@@ -12,6 +12,27 @@ export default function LoginScreen() {
   const [password, onChangePassword] = useState('');
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    // Check if there is a logged-in user when the component mounts.
+    checkLoggedInUser();
+  }, []);
+
+  const checkLoggedInUser = async () => {
+    try {
+      const usersData = await AsyncStorage.getItem('users');
+      if (usersData) {
+        const users = JSON.parse(usersData);
+        const loggedInUser = users.find(user => user.isLoggedIn === true);
+        if (loggedInUser) {
+          // A logged-in user exists, so navigate to the 'Home' screen.
+          navigation.push('Home');
+        }
+      }
+    } catch (error) {
+      console.error('Error checking for logged-in user:', error);
+    }
+  };
   
   const handleSignupPress = () => {
     if (!text.length) {
@@ -23,7 +44,7 @@ export default function LoginScreen() {
       return;
     }
 
-    const user = { email: text, password: password };
+    const user = { email: text, password: password, isLoggedIn: true, darkMode: false };
 
     AsyncStorage.getItem('users')
       .then((data) => {
@@ -65,7 +86,7 @@ export default function LoginScreen() {
       Alert.alert('Error', 'Please enter your password');
       return;
     }
-
+  
     AsyncStorage.getItem('users').then((data) => {
       const existingUsers = data ? JSON.parse(data) : [];
       const user = existingUsers.find((existingUser) => existingUser.email === text);
@@ -77,10 +98,22 @@ export default function LoginScreen() {
         Alert.alert('Error', 'Password is incorrect');
         return;
       }
-      navigation.push('Home');
+      
+      // Set isLoggedIn to true for the logged-in user
+      user.isLoggedIn = true;
+  
+      // Save the updated user data back to AsyncStorage
+      AsyncStorage.setItem('users', JSON.stringify(existingUsers))
+        .then(() => {
+          console.log('User logged in and saved in AsyncStorage:', existingUsers);
+          navigation.push('Home');
+        })
+        .catch((error) => {
+          console.error('Error saving user in AsyncStorage:', error);
+        });
     });
-
   };
+  
 
   return (
     <View style={{flex: 1}}>
